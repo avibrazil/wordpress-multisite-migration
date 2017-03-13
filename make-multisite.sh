@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 MULTISITE_ID=2
 
@@ -9,9 +9,9 @@ OLD_DB="blog_57"
 OLD_TABLE_PREFIX="wp_"
 
 NEW_DOMAIN="test.alkalay.net"
-NEW_DB_HOST=$OLD_HOST
-NEW_DB_USER=$OLD_USER
-NEW_DB="blog2"
+NEW_DB_HOST=$OLD_DB_HOST
+NEW_DB_USER=$OLD_DB_USER
+NEW_DB="alkalay_net_wordpress_multisite"
 NEW_TABLE_PREFIX=$OLD_TABLE_PREFIX
 
 echo
@@ -37,6 +37,6 @@ echo
 echo "Last instrumentations..."
 
 mysql -h "$NEW_DB_HOST" -u "$NEW_DB_USER" -p "$NEW_DB" <<EndOfInstrumentation
-UPDATE `${NEW_TABLE_PREFIX}${MULTISITE_ID}_options` SET `option_value` = 'https://${NEW_DOMAIN}' WHERE `wp_2_options`.`option_name` = 'home';
-UPDATE `${NEW_TABLE_PREFIX}${MULTISITE_ID}_options` SET `option_value` = 'https://${NEW_DOMAIN}' WHERE `wp_2_options`.`option_name` = 'siteurl';
+UPDATE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options SET option_value = 'https://${NEW_DOMAIN}' WHERE wp_2_options.option_name = 'home';
+UPDATE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options SET option_value = 'https://${NEW_DOMAIN}' WHERE wp_2_options.option_name = 'siteurl';
 EndOfInstrumentation
