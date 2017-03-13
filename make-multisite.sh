@@ -13,7 +13,7 @@ NEW_USER=$OLD_USER
 NEW_DB="blog2"
 NEW_TABLE_PREFIX=$OLD_TABLE_PREFIX
 
-
+echo
 echo "Export and convert..."
 mysqldump -h "$OLD_HOST" -u "$OLD_USER" -p --add-drop-table $OLD_DB |
 
@@ -27,6 +27,7 @@ sed -e "
 " | gzip -c -9 > "$DOMAIN".multisite.sql.gz
 
 
+echo
 echo "Import converted..."
 zcat "$DOMAIN".multisite.sql.gz | mysql -h "$NEW_HOST" -u "$NEW_USER" -p "$NEW_DB"
 
