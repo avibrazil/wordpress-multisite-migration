@@ -8,7 +8,7 @@ OLD_DB_USER="blog"
 OLD_DB="blog_57"
 OLD_TABLE_PREFIX="wp_"
 
-NEW_DOMAIN="test.alkalay.net"
+NEW_DOMAIN="avi.alkalay.net"
 NEW_DB_HOST=$OLD_DB_HOST
 NEW_DB_USER=$OLD_DB_USER
 NEW_DB="alkalay_net_wordpress_multisite"
@@ -37,6 +37,10 @@ echo
 echo "Last instrumentations..."
 
 mysql -h "$NEW_DB_HOST" -u "$NEW_DB_USER" -p "$NEW_DB" <<EndOfInstrumentation
-UPDATE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options SET option_value = 'https://${NEW_DOMAIN}' WHERE wp_2_options.option_name = 'home';
-UPDATE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options SET option_value = 'https://${NEW_DOMAIN}' WHERE wp_2_options.option_name = 'siteurl';
+UPDATE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options SET option_value = 'https://${NEW_DOMAIN}' WHERE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options.option_name = 'home';
+UPDATE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options SET option_value = 'https://${NEW_DOMAIN}' WHERE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options.option_name = 'siteurl';
+UPDATE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options SET option_value = 'https://${NEW_DOMAIN}' WHERE ${NEW_TABLE_PREFIX}${MULTISITE_ID}_options.option_name = 'oid_trust_root';
 EndOfInstrumentation
+
+# Later, I found this as a nice writeup about DB migration:
+# https://deliciousbrains.com/wp-migrate-db-pro/doc/exporting-single-site-as-subsite-for-multisite-install/
